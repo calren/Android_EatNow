@@ -3,6 +3,7 @@ package com.caren.eatnow.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,22 +14,18 @@ import android.widget.TextView;
 
 
 import com.caren.eatnow.R;
+import com.caren.eatnow.fragments.BrowseFragment;
 import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
 import com.caren.eatnow.helpers.ImageHelpers;
 import com.caren.eatnow.models.YelpBusinesses;
+import android.support.v4.app.FragmentActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrowseActivity extends Activity {
-
-    private TextView tvName;
-    private ImageView ivPicture;
-    private TextView tvDistance;
-    private ImageView ivRating;
-    private TextView tvRatingCount;
-    private TextView tvDescription;
+public class BrowseActivity extends FragmentActivity {
 
     private RelativeLayout ivYes;
     private RelativeLayout ivNo;
@@ -41,44 +38,34 @@ public class BrowseActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
-        List<YelpBusiness> results = new YelpBusinesses().getResults();
         numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
 
-        b = results.get(numOfResultToShow);
-
-        setUpInformation();
-
-
+        setUpItems();
+        startFragment();
     }
 
-    private void setUpInformation() {
-        tvName = (TextView) findViewById(R.id.tvName);
-        tvName.setText(b.getName());
+    private void startFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        BrowseFragment fragmentBrowse = BrowseFragment.newInstance(numOfResultToShow);
+        ft.setCustomAnimations(R.anim.left_out, R.anim.right_in);
+        ft.replace(R.id.fragmentPlaceHolder, fragmentBrowse);
+        ft.commit();
+    }
 
-        ivPicture = (ImageView) findViewById(R.id.ivImage);
-        new ImageHelpers.DownloadImageTask(ivPicture).execute(b.getImage());
-
-        tvDistance = (TextView) findViewById(R.id.tvDistance);
-        tvDistance.setText(b.getAddress());
-
-        ivRating = (ImageView) findViewById(R.id.ivRating);
-        new ImageHelpers.DownloadImageTask(ivRating).execute(b.getRating());
-
-        tvRatingCount = (TextView) findViewById(R.id.tvNumOfReviews);
-        tvRatingCount.setText(b.getNumOfReviews());
-
-        tvDescription = (TextView) findViewById(R.id.tvCategory);
-        tvDescription.setText(b.getDescription());
+    private void setUpItems() {
 
         ivYes = (RelativeLayout) findViewById(R.id.rlYes);
         ivNo = (RelativeLayout) findViewById(R.id.rlNo);
     }
 
+    public void onClickNo(View view) {
+        numOfResultToShow++;
+        startFragment();
+    }
+
     public void onClickYes(View view) {
-        Intent intent = new Intent(this, BrowseActivity.class);
-        intent.putExtra("numOfResult", numOfResultToShow++);
-        startActivity(intent);
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        //TODO
+        // open google maps to navigate?
     }
 
     @Override

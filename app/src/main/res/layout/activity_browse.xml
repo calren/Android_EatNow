@@ -9,74 +9,12 @@
     tools:context="com.caren.eatnow.activities.BrowseActivity"
     android:background="@drawable/restaurant">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_height="60dp"
-        android:text="The House"
-        android:id="@+id/tvName"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:textStyle="bold"
-        android:textSize="40sp"
-        android:textColor="#FFF"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Distance: 0.3 miles"
-        android:layout_marginRight="10dp"
-        android:id="@+id/tvDistance"
-        android:textColor="#FFF"
-        android:textSize="20sp"
-        android:layout_alignTop="@+id/ivImage"
-        android:layout_alignParentRight="true" />
-
-    <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:id="@+id/ivImage"
-        android:src="@drawable/pistos"
-        android:background="#FFF"
-        android:padding="5dp"
-        android:layout_below="@+id/tvName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="A random description about nothing much"
-        android:id="@+id/tvCategory"
-        android:textSize="20dp"
-        android:textColor="#FFF"
-        android:textStyle="italic"
-        android:layout_below="@+id/ivImage"
-        android:layout_alignStart="@+id/ivImage"
-        android:layout_marginTop="15dp"
-        android:layout_alignEnd="@+id/tvDistance"/>
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="27dp"
-        android:id="@+id/ivRating"
-        android:src="@drawable/stars_large_4_half"
-        android:layout_above="@+id/tvNumOfReviews"
-        android:layout_alignLeft="@+id/tvDistance" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="320 Reviews"
-        android:id="@+id/tvNumOfReviews"
-        android:textColor="#FFF"
-        android:textSize="20sp"
-        android:layout_alignBottom="@+id/ivImage"
-        android:layout_alignLeft="@+id/ivRating"
-        android:layout_marginTop="5dp"/>
+    <FrameLayout
+        android:id="@+id/fragmentPlaceHolder"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/linearLayout">
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -109,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rlNo"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:onClick="onClickNo">
 
             <ImageView
                 android:layout_width="100dp"
@@ -122,25 +61,5 @@
         </RelativeLayout>
 
         </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="80dp"
-        android:id="@+id/rlViewYelp"
-        android:layout_above="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <Button
-            android:id="@+id/btnYelpLink"
-            android:text="View Yelp Link"
-            android:textSize="25sp"
-            android:textColor="#FFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/yelplink_btn"
-            />
-    </RelativeLayout>
 
 </RelativeLayout>
