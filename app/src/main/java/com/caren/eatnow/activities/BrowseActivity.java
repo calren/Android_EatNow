@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.caren.eatnow.R;
 import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
