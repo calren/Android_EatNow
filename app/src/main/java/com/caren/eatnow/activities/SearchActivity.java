@@ -1,6 +1,7 @@
 package com.caren.eatnow.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,11 +35,9 @@ public class SearchActivity extends Activity {
                 YelpAPI.search(etQuery.getText().toString(), etLocation.getText().toString());
                 List<YelpBusiness> currentList = YelpAPI.currentList;
 
-                for (YelpBusiness b : currentList) {
-                    System.out.println(b.getName() + " " + b.getRating());
-                }
-//                List<YelpBusiness> results = YelpAPI.searchForBusinessesByLocation(etQuery.getText().toString(), etLocation.getText().toString());
-//                System.out.println(results.get(0).getName());
+                Intent  i =  new Intent(SearchActivity.this, BrowseActivity.class);
+                i.putExtra("numOfResult", 0);
+                startActivity(i);
             }
         });
     }

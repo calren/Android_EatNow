@@ -59,6 +59,7 @@ public class YelpAPI {
             @Override
             protected String doInBackground(Void... params) {
                 Response response = request.send();
+
                 String strResponse = response.getBody();
 
                 JSONParser parser = new JSONParser();
@@ -77,8 +78,16 @@ public class YelpAPI {
                 for (int i = 0; i < businesses.size(); i++) {
                     JSONObject objectB = (JSONObject) businesses.get(i);
 
-                    currentList.add(new YelpBusiness(objectB.get("name").toString(), objectB.get("image_url").toString()));
+                    currentList.add(new YelpBusiness(objectB.get("name").toString(),
+                            objectB.get("image_url").toString(),
+                            objectB.get("location").toString(), //TODO
+                            objectB.get("review_count").toString(),
+                            objectB.get("rating_img_url_large").toString(),
+                            "fake sample description for now", //TODO
+                            objectB.get("url").toString()));
                 }
+
+                new YelpBusinesses().setResults(currentList);
 
                 return "";
 
