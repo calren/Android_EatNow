@@ -1,13 +1,18 @@
 package com.caren.eatnow.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caren.eatnow.R;
+import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
 import com.caren.eatnow.helpers.ImageHelpers;
 import com.caren.eatnow.models.YelpBusinesses;
@@ -23,6 +28,9 @@ public class BrowseActivity extends Activity {
     private ImageView ivRating;
     private TextView tvRatingCount;
     private TextView tvDescription;
+
+    private RelativeLayout ivYes;
+    private RelativeLayout ivNo;
 
     private YelpBusiness b;
     private int numOfResultToShow;
@@ -61,8 +69,16 @@ public class BrowseActivity extends Activity {
         tvDescription = (TextView) findViewById(R.id.tvCategory);
         tvDescription.setText(b.getDescription());
 
+        ivYes = (RelativeLayout) findViewById(R.id.rlYes);
+        ivNo = (RelativeLayout) findViewById(R.id.rlNo);
     }
 
+    public void onClickYes(View view) {
+        Intent intent = new Intent(this, BrowseActivity.class);
+        intent.putExtra("numOfResult", numOfResultToShow++);
+        startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
