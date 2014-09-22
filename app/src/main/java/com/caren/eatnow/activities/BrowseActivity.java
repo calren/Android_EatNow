@@ -52,7 +52,7 @@ public class BrowseActivity extends Activity {
         tvDistance = (TextView) findViewById(R.id.tvDistance);
         tvDistance.setText(b.getAddress());
 
-        ivRating = (ImageView) findViewById(R.id.ivImage);
+        ivRating = (ImageView) findViewById(R.id.ivRating);
         new ImageHelpers.DownloadImageTask(ivRating).execute(b.getRating());
 
         tvRatingCount = (TextView) findViewById(R.id.tvNumOfReviews);

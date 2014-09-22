@@ -1,7 +1,11 @@
 package com.caren.eatnow.models;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.caren.eatnow.activities.BrowseActivity;
+import com.caren.eatnow.activities.SearchActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -36,6 +40,12 @@ public class YelpAPI {
 
     public static final List<YelpBusiness> currentList = new ArrayList<YelpBusiness>();
 
+    private static Activity activity;
+
+    public YelpAPI(Activity activity) {
+        this.activity = activity;
+    }
+
     public static void search(String query, String location) {
         final OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search");
         request.addQuerystringParameter("term", query);
@@ -62,6 +72,8 @@ public class YelpAPI {
 
                 String strResponse = response.getBody();
 
+                System.out.println("STRING RESPONSE: " + strResponse);
+
                 JSONParser parser = new JSONParser();
                 JSONObject jsonResponse = null;
                 try {
@@ -80,8 +92,8 @@ public class YelpAPI {
 
                     currentList.add(new YelpBusiness(objectB.get("name").toString(),
                             objectB.get("image_url").toString(),
-                            objectB.get("location").toString(), //TODO
-                            objectB.get("review_count").toString(),
+                           "840 Battery Street", //TODO
+                            objectB.get("review_count").toString() + " reviews",
                             objectB.get("rating_img_url_large").toString(),
                             "fake sample description for now", //TODO
                             objectB.get("url").toString()));
@@ -95,7 +107,9 @@ public class YelpAPI {
 
             @Override
             protected void onPostExecute(String url) {
-//                mWebView.loadUrl(url);
+                Intent  i =  new Intent(activity, BrowseActivity.class);
+                i.putExtra("numOfResult", 0);
+                activity.startActivity(i);
             }
         }).execute();
 //        String rawData = response.getBody();

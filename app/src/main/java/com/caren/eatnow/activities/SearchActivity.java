@@ -32,12 +32,7 @@ public class SearchActivity extends Activity {
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                YelpAPI.search(etQuery.getText().toString(), etLocation.getText().toString());
-                List<YelpBusiness> currentList = YelpAPI.currentList;
-
-                Intent  i =  new Intent(SearchActivity.this, BrowseActivity.class);
-                i.putExtra("numOfResult", 0);
-                startActivity(i);
+                new YelpAPI(SearchActivity.this).search(etQuery.getText().toString(), etLocation.getText().toString());
             }
         });
     }
