@@ -42,12 +42,12 @@ public class SearchActivity extends Activity {
         tvCustom = (TextView) findViewById(R.id.tvCustom);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         etLocation = (EditText) findViewById(R.id.etLocation);
+        pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
 
         setUpListeners();
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
                 pbLoading.setVisibility(ProgressBar.VISIBLE);
                 new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
 
@@ -173,5 +173,11 @@ public class SearchActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pbLoading.setVisibility(ProgressBar.INVISIBLE);
     }
 }

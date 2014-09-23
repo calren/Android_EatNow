@@ -33,7 +33,7 @@
             android:id="@+id/tvLunch"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/query_circle"
+            android:background="@drawable/query_circle_unselected"
             android:gravity="center"
             android:text="Lunch"
             android:textColor="#FFFFFF"

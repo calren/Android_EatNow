@@ -104,15 +104,10 @@ public class YelpAPI {
                         address = "No address found";
                     }
 
-                    try {
-                        address += "\n" + ((JSONObject)objectB.get("location")).get("city").toString();
-                    } catch (Exception e) {
-
-                    }
-
                     currentList.add(new YelpBusiness(objectB.get("name").toString(),
                             objectB.get("image_url").toString(),
                             address,
+                            ((JSONObject)objectB.get("location")).get("city").toString(),
                             objectB.get("review_count").toString() + " reviews",
                             objectB.get("rating_img_url_large").toString(),
                             categoriesS, //TODO

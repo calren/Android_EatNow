@@ -22,19 +22,30 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="840 Columbus Street \nSan Francisco \nLine 3"
+        android:text="840 Columbus Street \nLine 2"
         android:id="@+id/tvDistance"
         android:textColor="#FFF"
         android:textSize="17sp"
         android:layout_alignTop="@+id/ivImage"
         android:layout_toRightOf="@+id/ivImage"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:maxLines="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="San Francisco"
+        android:id="@+id/tvCity"
+        android:textColor="#FFF"
+        android:textSize="17sp"
+        android:layout_below="@id/tvDistance"
+        android:layout_alignStart="@id/tvDistance"/>
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:id="@+id/ivImage"
-        android:src="@drawable/pistos"
+        android:src="@drawable/noimage"
         android:background="#FFF"
         android:padding="5dp"
         android:layout_below="@+id/tvName"
