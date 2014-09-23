@@ -2,6 +2,7 @@ package com.caren.eatnow.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -39,6 +40,7 @@ public class BrowseActivity extends FragmentActivity {
         setContentView(R.layout.activity_browse);
 
         numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
+        b = new YelpBusinesses().getResults().get(numOfResultToShow);
 
         setUpItems();
         startFragment();
@@ -64,8 +66,9 @@ public class BrowseActivity extends FragmentActivity {
     }
 
     public void onClickYes(View view) {
-        //TODO
-        // open google maps to navigate?
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("google.navigation:q=" + "840 battery street san francisco"));
+        startActivity(intent);
     }
 
     @Override

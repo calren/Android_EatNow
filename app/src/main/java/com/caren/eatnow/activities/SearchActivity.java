@@ -142,7 +142,7 @@ public class SearchActivity extends Activity {
                 return customQuery;
         }
 
-        return "";
+        return "food";
 
     }
 
