@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class BrowseActivity extends FragmentActivity {
 
     private RelativeLayout ivYes;
     private RelativeLayout ivNo;
+    private ProgressBar pbLoading;
 
     private YelpBusiness b;
     private int numOfResultToShow;
@@ -40,6 +42,7 @@ public class BrowseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
+        pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
         numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
         b = new YelpBusinesses().getResults().get(numOfResultToShow);
 
@@ -55,6 +58,8 @@ public class BrowseActivity extends FragmentActivity {
             ft.replace(R.id.fragmentPlaceHolder, fragmentBrowse);
             ft.commit();
         } else {
+            ivYes.setVisibility(View.INVISIBLE);
+            ivNo.setVisibility(View.INVISIBLE);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             EndOfResultsFragment fragmentEnd = new EndOfResultsFragment();
             ft.setCustomAnimations(R.anim.left_out, R.anim.right_in);
@@ -82,5 +87,22 @@ public class BrowseActivity extends FragmentActivity {
                     Uri.parse("google.navigation:q=" + b.getAddress() + " " + b.getCity()));
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        pbLoading.setVisibility(ProgressBar.VISIBLE);
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        pbLoading.setVisibility(ProgressBar.INVISIBLE);
+        ivYes.setVisibility(View.VISIBLE);
+        ivNo.setVisibility(View.VISIBLE);
+
     }
 }
