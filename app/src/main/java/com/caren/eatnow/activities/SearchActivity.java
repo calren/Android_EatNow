@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caren.eatnow.R;
@@ -25,6 +26,8 @@ public class SearchActivity extends Activity {
     TextView tvDinner;
     TextView tvCustom;
     Button btnSearch;
+    EditText etLocation;
+    ProgressBar pbLoading;
 
     String customQuery = "Custom";
     int query = -1;
@@ -38,12 +41,16 @@ public class SearchActivity extends Activity {
         tvDinner = (TextView) findViewById(R.id.tvDinner);
         tvCustom = (TextView) findViewById(R.id.tvCustom);
         btnSearch = (Button) findViewById(R.id.btnSearch);
+        etLocation = (EditText) findViewById(R.id.etLocation);
 
         setUpListeners();
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                new YelpAPI(SearchActivity.this).search(getSelectedQuery(), "94111"); //TODO
+                pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
+                pbLoading.setVisibility(ProgressBar.VISIBLE);
+                new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
+
             }
         });
     }
@@ -71,7 +78,7 @@ public class SearchActivity extends Activity {
             public void onClick(View view) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
 
-                alert.setTitle("Custom Query");
+                alert.setTitle("Custom Search");
                 alert.setMessage("(eg: sushi, burgers)");
 
                 final EditText input = new EditText(view.getContext());

@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="840 Columbus Street \nSan Francisco"
+        android:text="840 Columbus Street \nSan Francisco \nLine 3"
         android:id="@+id/tvDistance"
         android:textColor="#FFF"
         android:textSize="17sp"
@@ -31,8 +31,8 @@
         android:layout_marginLeft="30dp"/>
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:id="@+id/ivImage"
         android:src="@drawable/pistos"
         android:background="#FFF"

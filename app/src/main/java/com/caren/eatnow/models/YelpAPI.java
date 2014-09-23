@@ -47,6 +47,7 @@ public class YelpAPI {
         request.addQuerystringParameter("term", query);
         request.addQuerystringParameter("location", location);
         request.addQuerystringParameter("sort", "2");
+        request.addQuerystringParameter("limit", "20");
 
         callAPI(request);
     }
