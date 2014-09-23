@@ -22,13 +22,6 @@ import java.util.List;
 
 public class YelpAPI {
 
-    private static final String API_HOST = "api.yelp.com";
-    private static final String DEFAULT_TERM = "dinner";
-    private static final String DEFAULT_LOCATION = "San Francisco, CA";
-    private static final int SEARCH_LIMIT = 3;
-    private static final String SEARCH_PATH = "/v2/search";
-    private static final String BUSINESS_PATH = "/v2/business";
-
     private static final String CONSUMER_KEY = "FyCeKucvvdYGs1DTawIxWQ";
     private static final String CONSUMER_SECRET = "WR5JSUsb7PASqXfC1105nfvekUo";
     private static final String TOKEN = "FjyLBARfE2t9ZOQXsePSzbgooxW7wjSP";
@@ -110,7 +103,7 @@ public class YelpAPI {
                             ((JSONObject)objectB.get("location")).get("city").toString(),
                             objectB.get("review_count").toString() + " reviews",
                             objectB.get("rating_img_url_large").toString(),
-                            categoriesS, //TODO
+                            categoriesS,
                             objectB.get("url").toString()));
                 }
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.caren.eatnow.R;
 import com.caren.eatnow.fragments.BrowseFragment;
+import com.caren.eatnow.fragments.EndOfResultsFragment;
 import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
 import com.caren.eatnow.helpers.ImageHelpers;
@@ -47,11 +48,20 @@ public class BrowseActivity extends FragmentActivity {
     }
 
     private void startFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        BrowseFragment fragmentBrowse = BrowseFragment.newInstance(numOfResultToShow);
-        ft.setCustomAnimations(R.anim.left_out, R.anim.right_in);
-        ft.replace(R.id.fragmentPlaceHolder, fragmentBrowse);
-        ft.commit();
+        if (numOfResultToShow <= 5) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            BrowseFragment fragmentBrowse = BrowseFragment.newInstance(numOfResultToShow);
+            ft.setCustomAnimations(R.anim.left_out, R.anim.right_in);
+            ft.replace(R.id.fragmentPlaceHolder, fragmentBrowse);
+            ft.commit();
+        } else {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            EndOfResultsFragment fragmentEnd = new EndOfResultsFragment();
+            ft.setCustomAnimations(R.anim.left_out, R.anim.right_in);
+            ft.replace(R.id.fragmentPlaceHolder, fragmentEnd);
+            ft.commit();
+        }
+
     }
 
     private void setUpItems() {
@@ -61,13 +71,18 @@ public class BrowseActivity extends FragmentActivity {
     }
 
     public void onClickNo(View view) {
-        numOfResultToShow++;
-        startFragment();
+        if (numOfResultToShow <= 5) {
+            numOfResultToShow++;
+            startFragment();
+        }
+
     }
 
     public void onClickYes(View view) {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("google.navigation:q=" + b.getAddress() + " " + b.getCity()));
-        startActivity(intent);
+        if (numOfResultToShow <= 5) {
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:q=" + b.getAddress() + " " + b.getCity()));
+            startActivity(intent);
+        }
     }
 }
