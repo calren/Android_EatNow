@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.caren.eatnow.activities.BrowseActivity;
-import com.caren.eatnow.activities.SearchActivity;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -87,15 +83,38 @@ public class YelpAPI {
                 JSONArray businesses = (JSONArray) jsonResponse.get("businesses");
 
                 currentList.clear();
+
                 for (int i = 0; i < businesses.size(); i++) {
                     JSONObject objectB = (JSONObject) businesses.get(i);
 
+                    String categoriesS = "";
+                    JSONArray categories= (JSONArray) objectB.get("categories");
+                    for (int j = 0; j < categories.size(); j++) {
+                        if (j != 0) {
+                            categoriesS += ", ";
+                        }
+                        categoriesS += ((JSONArray) categories.get(j)).get(0).toString().replace(" \" ", "");
+                    }
+
+                    String address = "";
+                    try {
+                        address = ((JSONArray)((JSONObject)objectB.get("location")).get("address")).get(0).toString();
+                    } catch (Exception e ) {
+                        address = "No address found";
+                    }
+
+                    try {
+                        address += "\n" + ((JSONObject)objectB.get("location")).get("city").toString();
+                    } catch (Exception e) {
+
+                    }
+
                     currentList.add(new YelpBusiness(objectB.get("name").toString(),
                             objectB.get("image_url").toString(),
-                           "840 Battery Street", //TODO
+                            address,
                             objectB.get("review_count").toString() + " reviews",
                             objectB.get("rating_img_url_large").toString(),
-                            "fake sample description for now", //TODO
+                            categoriesS, //TODO
                             objectB.get("url").toString()));
                 }
 
@@ -112,7 +131,6 @@ public class YelpAPI {
                 activity.startActivity(i);
             }
         }).execute();
-//        String rawData = response.getBody();
     }
 
 }

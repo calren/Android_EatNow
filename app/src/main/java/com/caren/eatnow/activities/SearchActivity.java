@@ -1,13 +1,17 @@
 package com.caren.eatnow.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.caren.eatnow.R;
 import com.caren.eatnow.models.YelpAPI;
@@ -17,25 +21,132 @@ import java.util.List;
 
 public class SearchActivity extends Activity {
 
-    EditText etQuery;
-    EditText etLocation;
+    TextView tvLunch;
+    TextView tvDinner;
+    TextView tvCustom;
     Button btnSearch;
+
+    String customQuery = "Custom";
+    int query = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        etQuery = (EditText) findViewById(R.id.etQuery);
-        etLocation = (EditText) findViewById(R.id.etLocation);
+        tvLunch = (TextView) findViewById(R.id.tvLunch);
+        tvDinner = (TextView) findViewById(R.id.tvDinner);
+        tvCustom = (TextView) findViewById(R.id.tvCustom);
         btnSearch = (Button) findViewById(R.id.btnSearch);
+
+        setUpListeners();
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                new YelpAPI(SearchActivity.this).search(etQuery.getText().toString(), etLocation.getText().toString());
+                new YelpAPI(SearchActivity.this).search(getSelectedQuery(), "94111"); //TODO
             }
         });
     }
+
+    public void setUpListeners() {
+
+        tvLunch.setOnClickListener(new View.OnClickListener() {
+            private boolean stateChanged = false;
+
+            public void onClick(View view) {
+                setSelected(1);
+            }
+        });
+
+        tvDinner.setOnClickListener(new View.OnClickListener() {
+            private boolean stateChanged = false;
+
+            public void onClick(View view) {
+                setSelected(2);
+            }
+        });
+
+        tvCustom.setOnClickListener(new View.OnClickListener() {
+            private boolean stateChanged = false;
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+
+                alert.setTitle("Custom Query");
+                alert.setMessage("(eg: sushi, burgers)");
+
+                final EditText input = new EditText(view.getContext());
+                alert.setView(input);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        customQuery = input.getText().toString();
+                        tvCustom.setText(customQuery);
+                        stateChanged = true;
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+
+                alert.show();
+
+                setSelected(3);
+            }
+        });
+
+
+    }
+
+
+    public void setSelected(int selected) {
+        if (query != selected) {
+            switch (selected) {
+                case 1:
+                    resetAll();
+                    tvLunch.setBackgroundResource(R.drawable.query_circle_selected);
+                    query = 1;
+                    break;
+                case 2:
+                    resetAll();
+                    tvDinner.setBackgroundResource(R.drawable.query_circle_selected);
+                    query = 2;
+                    break;
+                case 3:
+                    resetAll();
+                    tvCustom.setBackgroundResource(R.drawable.query_circle_selected);
+                    query = 3;
+                    break;
+            }
+        } else {
+            resetAll();
+        }
+
+    }
+
+    public String getSelectedQuery() {
+        switch (query) {
+            case 1:
+                return "lunch";
+            case 2:
+                return "dinner";
+            case 3:
+                return customQuery;
+        }
+
+        return "";
+
+    }
+
+    public void resetAll() {
+        query = -1;
+        tvLunch.setBackgroundResource(R.drawable.query_circle_unselected);
+        tvDinner.setBackgroundResource(R.drawable.query_circle_unselected);
+        tvCustom.setBackgroundResource(R.drawable.query_circle_unselected);
+        tvCustom.setText("Custom");
+    }
+
 
 
     @Override
