@@ -65,7 +65,6 @@ public class BrowseActivity extends FragmentActivity {
     }
 
     private void setUpItems() {
-
         ivYes = (RelativeLayout) findViewById(R.id.rlYes);
         ivNo = (RelativeLayout) findViewById(R.id.rlNo);
     }
@@ -75,7 +74,6 @@ public class BrowseActivity extends FragmentActivity {
             numOfResultToShow++;
             startFragment();
         }
-
     }
 
     public void onClickYes(View view) {
