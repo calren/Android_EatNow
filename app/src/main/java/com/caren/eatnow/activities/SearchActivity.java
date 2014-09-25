@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
@@ -26,6 +28,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends Activity implements
@@ -39,6 +42,8 @@ public class SearchActivity extends Activity implements
     EditText etLocation;
     ProgressBar pbLoading;
     LocationClient mLocationClient;
+    Location mCurrentLocation;
+    String currentZipCode;
 
 
     String customQuery = "Custom";
@@ -59,7 +64,6 @@ public class SearchActivity extends Activity implements
 
         setUpListeners();
         mLocationClient = new LocationClient(this, this, this);
-
 
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -183,9 +187,17 @@ public class SearchActivity extends Activity implements
 
     @Override
     public void onConnected(Bundle dataBundle) {
-        Location mCurrentLocation = mLocationClient.getLastLocation();
-        Log.d("DEBUG", "current location: " + mCurrentLocation.toString());
-        LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        mCurrentLocation = mLocationClient.getLastLocation();
+        Geocoder gCoder = new Geocoder(this);
+        List<Address> addresses = new ArrayList<Address>();
+        try {
+            addresses = gCoder.getFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), 1);
+        } catch (Exception e ) {
+        }
+
+        if (addresses != null && addresses.size() > 0) {
+            etLocation.setText(addresses.get(0).getAddressLine(1));
+        }
     }
 
     @Override
