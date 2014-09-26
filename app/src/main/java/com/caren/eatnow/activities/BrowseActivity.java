@@ -23,6 +23,7 @@ import com.caren.eatnow.models.YelpBusiness;
 import com.caren.eatnow.helpers.ImageHelpers;
 import com.caren.eatnow.models.YelpBusinesses;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -44,19 +45,20 @@ public class BrowseActivity extends FragmentActivity {
 
         pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
 
-        /*
-        if users come back to app without searching first
-         */
-        try {
-            numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
-            b = new YelpBusinesses().getResults().get(numOfResultToShow);
-        } catch (Exception e) {
+        numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
+
+        setUpItems();
+
+        List<YelpBusiness> results = new YelpBusinesses().getResults();
+
+        if (results.size() > 0) {
+            b = results.get(numOfResultToShow);
+            startFragment();
+        } else {
+            Toast.makeText(this, "No results for your search... try something else!", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(BrowseActivity.this, SearchActivity.class);
             startActivity(i);
         }
-
-        setUpItems();
-        startFragment();
     }
 
     private void startFragment() {

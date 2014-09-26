@@ -10,20 +10,31 @@
         android:paddingLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You're way too picky... Either try some new search options, or cook your own food"
+        android:text="Don't be too picky!"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:textSize="30dp"
         android:textColor="#FFF"
         android:layout_centerInParent="true"/>
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:id="@+id/imageView"
         android:layout_below="@+id/textView"
         android:src="@drawable/sadwhale"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Start New Search"
+        android:id="@+id/btnNewSearch"
+        android:background="@drawable/transparent_btn"
+        android:textColor="#FFF"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
 </RelativeLayout>

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caren.eatnow.R;
+import com.caren.eatnow.activities.SearchActivity;
 import com.caren.eatnow.helpers.ImageHelpers;
 import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
@@ -61,10 +62,14 @@ public class BrowseFragment extends Fragment {
 
         List<YelpBusiness> results = new YelpBusinesses().getResults();
 
-        b = results.get(numOfResultToShow);
-
-        setUpInformation();
-        setUpListeners();
+       if (results.size() > 0) {
+           b = results.get(numOfResultToShow);
+           setUpInformation();
+           setUpListeners();
+       } else {
+           Intent i = new Intent(getActivity(), SearchActivity.class);
+           startActivity(i);
+       }
 
         return view;
     }
