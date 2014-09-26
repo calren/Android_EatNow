@@ -9,10 +9,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +22,6 @@ import com.caren.eatnow.models.YelpBusiness;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,19 +57,25 @@ public class SearchActivity extends Activity implements
         etLocation = (EditText) findViewById(R.id.etLocation);
         pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
 
-        setUpListeners();
         mLocationClient = new LocationClient(this, this, this);
 
-        btnSearch.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                pbLoading.setVisibility(ProgressBar.VISIBLE);
-                new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
+        setUpListeners();
 
-            }
-        });
     }
 
     public void setUpListeners() {
+        btnSearch.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                if (etLocation.getText().toString() != "") {
+                    pbLoading.setVisibility(ProgressBar.VISIBLE);
+                    new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
+                } else {
+                    Toast.makeText(getBaseContext(), "Where are you eating?", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
 
         tvLunch.setOnClickListener(new View.OnClickListener() {
             private boolean stateChanged = false;
@@ -209,23 +210,14 @@ public class SearchActivity extends Activity implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
             try {
-                // Start an Activity that tries to resolve the error
                 connectionResult.startResolutionForResult(
                         this,
                         1000);
-                /*
-                 * Thrown if Google Play services canceled the original
-                 * PendingIntent
-                 */
             } catch (IntentSender.SendIntentException e) {
-                // Log the error
                 e.printStackTrace();
             }
         } else {
-            /*
-             * If no resolution is available, display a dialog to the
-             * user with the error.
-             */
+
             System.out.println(connectionResult.getErrorCode());
         }
     }

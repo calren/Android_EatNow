@@ -43,8 +43,17 @@ public class BrowseActivity extends FragmentActivity {
         setContentView(R.layout.activity_browse);
 
         pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
-        numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
-        b = new YelpBusinesses().getResults().get(numOfResultToShow);
+
+        /*
+        if users come back to app without searching first
+         */
+        try {
+            numOfResultToShow = getIntent().getIntExtra("numOfResult", -1);
+            b = new YelpBusinesses().getResults().get(numOfResultToShow);
+        } catch (Exception e) {
+            Intent i = new Intent(BrowseActivity.this, SearchActivity.class);
+            startActivity(i);
+        }
 
         setUpItems();
         startFragment();
