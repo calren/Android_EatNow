@@ -26,7 +26,8 @@
             android:value="5089000" />
         <activity
             android:name=".activities.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +36,8 @@
         </activity>
         <activity
             android:name=".activities.BrowseActivity"
-            android:label="@string/title_activity_browse" >
+            android:label="@string/title_activity_browse"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>
