@@ -9,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,11 +67,13 @@ public class SearchActivity extends Activity implements
     public void setUpListeners() {
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if (etLocation.getText().toString() != "") {
+                if (etLocation.getText().toString().length() > 5) {
                     pbLoading.setVisibility(ProgressBar.VISIBLE);
                     new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
                 } else {
-                    Toast.makeText(getBaseContext(), "Where are you eating?", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getBaseContext(), "Where are you eating?", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
                 }
 
 
