@@ -104,7 +104,7 @@ public class SearchActivity extends Activity implements
                 final EditText input = new EditText(view.getContext());
                 alert.setView(input);
 
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("GO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         customQuery = input.getText().toString();
                         tvCustom.setText(customQuery);
