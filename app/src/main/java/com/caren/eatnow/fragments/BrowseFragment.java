@@ -1,26 +1,19 @@
 package com.caren.eatnow.fragments;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.caren.eatnow.R;
 import com.caren.eatnow.activities.SearchActivity;
 import com.caren.eatnow.helpers.ImageHelpers;
-import com.caren.eatnow.models.YelpAPI;
 import com.caren.eatnow.models.YelpBusiness;
 import com.caren.eatnow.models.YelpBusinesses;
 
@@ -34,6 +27,7 @@ public class BrowseFragment extends Fragment {
     private ImageView ivRating;
     private TextView tvRatingCount;
     private TextView tvDescription;
+    private TextView tvCity;
     private Button btnYelpLink;
 
     private YelpBusiness b;
@@ -96,6 +90,9 @@ public class BrowseFragment extends Fragment {
 
         tvDistance = (TextView) view.findViewById(R.id.tvDistance);
         tvDistance.setText(b.getAddress());
+
+        tvCity = (TextView) view.findViewById(R.id.tvCity);
+        tvCity.setText(b.getCity());
 
         ivRating = (ImageView) view.findViewById(R.id.ivRating);
         new ImageHelpers.DownloadImageTask(ivRating).execute(b.getRating());

@@ -86,14 +86,14 @@ public class BrowseActivity extends FragmentActivity {
     }
 
     public void onClickNo(View view) {
-        if (numOfResultToShow <= 5) {
+        if (numOfResultToShow <= 10) {
             numOfResultToShow++;
             startFragment();
         }
     }
 
     public void onClickYes(View view) {
-        if (numOfResultToShow <= 5) {
+        if (numOfResultToShow <= 10) {
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse("google.navigation:q=" + b.getAddress() + " " + b.getCity()));
             startActivity(intent);

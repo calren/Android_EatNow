@@ -67,7 +67,7 @@ public class SearchActivity extends Activity implements
     public void setUpListeners() {
         btnSearch.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if (etLocation.getText().toString().length() > 5) {
+                if (etLocation.getText().toString().length() > 4) {
                     pbLoading.setVisibility(ProgressBar.VISIBLE);
                     new YelpAPI(SearchActivity.this).search(getSelectedQuery(), etLocation.getText().toString());
                 } else {
