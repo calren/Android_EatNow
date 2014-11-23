@@ -37,6 +37,7 @@ public class BrowseActivity extends FragmentActivity {
 
     private YelpBusiness b;
     private int numOfResultToShow;
+    private List<YelpBusiness> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class BrowseActivity extends FragmentActivity {
 
         setUpItems();
 
-        List<YelpBusiness> results = new YelpBusinesses().getResults();
+        results = new YelpBusinesses().getResults();
 
         if (results.size() > 0) {
             b = results.get(numOfResultToShow);
@@ -94,6 +95,7 @@ public class BrowseActivity extends FragmentActivity {
 
     public void onClickYes(View view) {
         if (numOfResultToShow <= 10) {
+            b = results.get(numOfResultToShow);
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse("google.navigation:q=" + b.getAddress() + " " + b.getCity()));
             startActivity(intent);
